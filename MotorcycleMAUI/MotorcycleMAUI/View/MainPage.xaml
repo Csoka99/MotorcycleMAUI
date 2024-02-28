@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorcycleMAUI.MainPage"
+             Title="MotorcycleGame"
+             >
+    
+
+    <Grid Margin="4" RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+        <!-- a gombokat a képernyő tetejére helyezzük -->
+        <Button Text="Start" Command="{Binding StartCommand}" IsEnabled="{Binding Start}" Grid.Row="0" HorizontalOptions="Start" />
+        <Button Text="New Game" Command="{Binding NewGameCommand}" IsEnabled="{Binding Start}" Grid.Row="0" HorizontalOptions="Center" />
+        <Button Text="Stop" Command="{Binding PauseCommand}" IsEnabled="{Binding Pause}" Grid.Row="0" HorizontalOptions="End"/>
+        
+        <Button Text="Save" Command="{Binding SaveGameCommand}" IsEnabled="{Binding Start}" Grid.Row="1" HorizontalOptions="Start" />
+        <Button Text="Load" Command="{Binding LoadGameCommand}" IsEnabled="{Binding Start}" Grid.Row="1" HorizontalOptions="End" />
+
+        <Grid
+            Grid.Row="2"
+            BindableLayout.ItemsSource="{Binding Fields}"
+            RowDefinitions="{Binding GameTableRows}"
+            ColumnDefinitions="{Binding GameTableColumns}"
+            ColumnSpacing="4"
+            RowSpacing="4">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <!-- a rács elemei gombok lesznek -->
+                    <Rectangle
+                    Grid.Row="{Binding RowIndex}"
+                    Grid.Column="{Binding ColumnIndex}"
+                    Fill="{Binding Color}"
+                    Stroke="Black"
+                    />
+                    
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </Grid>
+
+        <Button Text="Left" Command="{Binding MoveMotorCommand}" CommandParameter="Left" Grid.Row="3" HorizontalOptions="Start"/>
+        <Button Text="Right" Command="{Binding MoveMotorCommand}" CommandParameter="Right" Grid.Row="3" HorizontalOptions="End" />
+
+
+        <!-- az információkat alul írjuk ki -->
+        <HorizontalStackLayout HorizontalOptions="Start" Grid.Row="4">
+            <Label Text="Üzemanyagszint: " />
+            <Label Text="{Binding FuelTank}" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="End" Grid.Row="4">
+            <Label Text="Játékidő: " />
+            <Label Text="{Binding Time}" />
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>
